@@ -1,4 +1,4 @@
-import pymongo, json, cv2, os
+import json, cv2, os
 from flask import Flask, request, render_template, flash
 import numpy as np
 import pytesseract as tess
