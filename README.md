@@ -7,3 +7,7 @@ After you download pytesseract,
 2. Make sure to set it as an environment variable to import it to your pyfile.
 
 Rest required modules like openCV, numpy & flask can be easily be installed through pip or pip3.
+
+
+
+For more accuracy, adjust the image sharpening section in app.py according to the requirements of the desired image.
