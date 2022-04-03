@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/999ca2bb93.js" crossorigin="anonymous"></script>
+
+    <style>
+        .imgs{
+            width: 70px;
+            height: 70px;
+        }
+        
+h1{
+  font-size: 30px;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: 15px;
+}
+table{
+  width:100%;
+  table-layout: fixed;
+}
+.tbl-header{
+  background-color: rgba(255,255,255,0.3);
+ }
+.tbl-content{
+  height:300px;
+  overflow-x:auto;
+  margin-top: 0px;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+th{
+  padding: 20px 15px;
+  text-align: left;
+  font-weight: 500;
+  font-size: 12px;
+  color: #fff;
+  text-transform: uppercase;
+}
+td{
+  padding: 15px;
+  text-align: left;
+  vertical-align:middle;
+  font-weight: 300;
+  font-size: 12px;
+  color: #fff;
+  border-bottom: solid 1px rgba(255,255,255,0.1);
+}
+
+
+/* demo styles */
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
+body{
+  background: -webkit-linear-gradient(left, #25c481, #25b7c4);
+  background: linear-gradient(to right, #25c481, #25b7c4);
+  font-family: 'Roboto', sans-serif;
+}
+section{
+  margin: 50px;
+}
+
+
+/* for custom scrollbar for webkit browser*/
+
+::-webkit-scrollbar {
+    width: 6px;
+} 
+
+    </style>
+</head>
+<body>
+ 
+    {% with messages = get_flashed_messages(with_categories=True) %} {% if messages %}{% for category, message in messages %}{% if category == "error" %}
+    <div class="alert alert-danger alter-dismissible fade show" role="alert" >
+      {{ message }}
+      <button class="btn_close" type="button" data-bs-dismiss="alert"></button>
+    </div>
+    {% else %}
+    <div class="alert alert-success alter-dismissible fade show" role="alert" >
+      {{ message }}
+      <button class="btn_close" type="button" data-bs-dismiss="alert"></button>
+    </div>
+    {% endif %}{% endfor %}{% endif %}{% endwith %}
+    <div>
+        <form class="form-group" id="form1" method="POST" action = "/uploads" enctype="multipart/form-data">
+            <div class="form-input">
+                <h2>Front Citizenship</h2>
+                <input name='image' type="file" id="file-input">
+                <div id="preview" class="imgs"></div>
+               
+            </div>
+            <div class="form-input">
+                <h2>Back Citizenship</h2>
+                <input  name='image2' type="file" id="file-input1"  >
+                <div id="preview1" class="imgs"></div>
+            </div>
+            
+        </form>
+        <input type="button" value="Submit" onclick="submitForms()" />
+    </div>  
+    <section>
+        <!--for demo wrap-->
+        <h1>Extracted Data</h1>
+        <div class="tbl-header">
+          <table cellpadding="0" cellspacing="0" border="0">
+            <thead>
+              <tr>
+                <th>Front Data</th>
+                <th>Back Data</th>
+    
+              </tr>
+            </thead>
+          </table>
+        </div>
+        <div class="tbl-content">
+          <table cellpadding="0" cellspacing="0" border="0">
+            <tbody>
+            {% for i in ldata%}
+              <tr> 
+
+                <td> {{i.front}}</td>
+                <td> {{i.back}}</td>
+
+            {% endfor %}
+      
+               
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    
+</body>
+
+
+    <script type="text/javascript">
+        function previewImages() {
+
+                var preview = document.querySelector('#preview');
+
+                if (this.files) {
+                [].forEach.call(this.files, readAndPreview);
+                }
+
+                function readAndPreview(file) {
+
+                // Make sure `file.name` matches our extensions criteria
+                if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
+                    return alert(file.name + " is not an image");
+                } // else...
+                
+                var reader = new FileReader();
+                
+                reader.addEventListener("load", function() {
+                    var image = new Image();
+                    image.height = 100;
+                    image.title  = file.name;
+                    image.src    = this.result;
+                    preview.appendChild(image);
+                });
+                
+                reader.readAsDataURL(file);
+                
+                }
+
+                }
+
+                document.querySelector('#file-input').addEventListener("change", previewImages);
+
+
+
+
+
+                function previewImages1() {
+
+                var preview = document.querySelector('#preview1');
+
+                if (this.files) {
+                [].forEach.call(this.files, readAndPreview);
+                }
+
+                function readAndPreview(file) {
+
+                // Make sure `file.name` matches our extensions criteria
+                if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
+                    return alert(file.name + " is not an image");
+                } // else...
+
+                var reader = new FileReader();
+
+                reader.addEventListener("load", function() {
+                    var image = new Image();
+                    image.height = 100;
+                    image.title  = file.name;
+                    image.src    = this.result;
+                    preview.appendChild(image);
+                });
+
+                reader.readAsDataURL(file);
+
+                }
+
+                }
+
+                document.querySelector('#file-input1').addEventListener("change", previewImages);
+
+    
+       
+       submitForms = function(){
+        document.getElementById("form1").submit();
+        document.getElementById("form2").submit();
+        }
+        $(window).on("load resize ", function() {
+        var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
+        $('.tbl-header').css({'padding-right':scrollWidth});
+        }).resize();
+    </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</html>
